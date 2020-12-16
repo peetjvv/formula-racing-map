@@ -1,0 +1,16 @@
+@import 'mapbox-gl/dist/mapbox-gl.css';
+
+body {
+  margin: unset;
+
+  .app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+
+    .map-container {
+      position: relative;
+      display: flex;
+    }
+  }
+}

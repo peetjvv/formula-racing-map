@@ -1,0 +1,40 @@
+{
+  "name": "formula-racing-map",
+  "version": "0.0.1",
+  "description": "React app of a map displaying the formula 1, 2, 3 and E races schedule",
+  "main": "index.tsx",
+  "scripts": {
+    "start": "webpack serve",
+    "build": "webpack --env.production"
+  },
+  "author": "Peet Janse van Vuuren",
+  "license": "MIT",
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "useTabs": false,
+    "arrowParens": "avoid"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-map-gl": "^5.2.11"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-map-gl": "^5.2.9",
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.5.0",
+    "node-sass-json-importer": "^4.3.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.12",
+    "typescript": "^4.1.3",
+    "webpack": "^5.10.3",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
