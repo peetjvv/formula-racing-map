@@ -1,16 +1,60 @@
+@import './vars.json';
 @import 'mapbox-gl/dist/mapbox-gl.css';
+@import url('https://fonts.googleapis.com/css2?family=Sniglet&display=swap');
 
 body {
   margin: unset;
 
+  font-family: 'Sniglet', cursive;
+  font-size: 16px;
+
   .app {
     display: flex;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
+
+    .top-panel {
+      z-index: 1;
+      height: $top-panel-height + 0px;
+      padding: 16px 24px;
+      background-color: #fefefe;
+
+      box-shadow: 0px 0px 21px -6px #121212;
+    }
 
     .map-container {
       position: relative;
       display: flex;
+
+      .mapboxgl-control-container {
+        .mapboxgl-ctrl-bottom-left {
+          left: unset;
+          right: 0;
+          bottom: 16px;
+        }
+      }
+
+      .map-controls-container {
+        position: absolute;
+        $placement-offset: 16px;
+
+        &.top {
+          top: $top-panel-height + $placement-offset;
+        }
+
+        &.bottom {
+          bottom: $placement-offset;
+        }
+
+        &.left {
+          left: $placement-offset;
+        }
+
+        &.right {
+          right: $placement-offset;
+        }
+      }
     }
   }
 }

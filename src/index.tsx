@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { useEffect, useState } from 'react';
 import ReactMapGl, { ViewportProps } from 'react-map-gl';
+import vars from './vars';
 import './main.scss';
 
 type MyViewportProps = Pick<
@@ -13,9 +14,9 @@ const App: React.FC<{}> = () => {
   const [viewport, setViewport] = useState<MyViewportProps>({
     width: 400,
     height: 400,
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
+    latitude: 48.3419023,
+    longitude: 8.8835719,
+    zoom: 3,
     bearing: 0,
     pitch: 0,
   });
@@ -24,7 +25,7 @@ const App: React.FC<{}> = () => {
     const initialViewport: MyViewportProps = {
       ...viewport,
       width: window.innerWidth,
-      height: window.innerHeight,
+      height: window.innerHeight - vars['top-panel-height'],
     };
     setViewport(initialViewport);
 
@@ -32,19 +33,20 @@ const App: React.FC<{}> = () => {
       setViewport({
         ...viewport,
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight - 200,
       });
     });
   }, []);
 
   return (
     <div className="app">
+      <div className="top-panel">Hallo there</div>
       <div className="map-container">
         <ReactMapGl
           {...viewport}
           onViewportChange={v => setViewport(v)}
           mapboxApiAccessToken={
-            'pk.eyJ1IjoicGVldGp2diIsImEiOiJjajluMW5jejM0c3BwMzNxdHVja2V1ZW90In0.lEV3-a6gpePWGBssPv02ng'
+            'pk.eyJ1IjoicGVldGp2diIsImEiOiJja2lza3E5cmkyMzAyMnFwM2VpeWUwYjV2In0.kze_sfKhhkSqVM5DfQtlMw'
           }
           mapStyle={'mapbox://styles/mapbox/streets-v11'}
           doubleClickZoom={false}

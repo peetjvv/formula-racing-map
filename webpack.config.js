@@ -22,6 +22,10 @@ module.exports = {
         },
       },
       {
+        test: /\.modernizrrc(\.json)?$/,
+        use: ['modernizr-loader', 'json-loader'],
+      },
+      {
         test: /\.scss/,
         use: [
           require.resolve('style-loader'),
