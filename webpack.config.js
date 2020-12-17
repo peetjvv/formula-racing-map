@@ -13,7 +13,12 @@ module.exports = {
     publicPath: '/',
   },
   module: {
+    // noParse: /(mapbox-gl)\.js$/,
     rules: [
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+      },
       {
         test: /\.(ts|tsx)$/,
         exclude: /(node_modules)/,
@@ -66,8 +71,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './src/index.html',
       filename: 'index.html',
+      favicon: './src/favicon.ico',
     }),
     new webpack.EnvironmentPlugin({
       // TODO: mapbox token here
