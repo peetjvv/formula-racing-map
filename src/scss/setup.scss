@@ -1,0 +1,30 @@
+body {
+  margin: unset;
+
+  font-family: 'Sniglet', cursive;
+  font-size: 1rem;
+  color: $pt-black;
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  a {
+    cursor: pointer;
+    color: $pt-blue;
+    text-decoration: unset;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      color: unset;
+    }
+
+    &:not(.disabled) {
+      transition: color 0.25s ease-in-out;
+      &:hover {
+        color: darken($pt-blue, 10%);
+      }
+    }
+  }
+}

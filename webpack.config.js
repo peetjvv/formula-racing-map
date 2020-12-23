@@ -59,6 +59,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {
@@ -76,7 +80,8 @@ module.exports = {
       favicon: './src/favicon.ico',
     }),
     new webpack.EnvironmentPlugin({
-      // TODO: mapbox token here
+      MAPBOX_TOKEN:
+        'pk.eyJ1IjoicGVldGp2diIsImEiOiJja2lza3E5cmkyMzAyMnFwM2VpeWUwYjV2In0.kze_sfKhhkSqVM5DfQtlMw',
     }),
   ],
   devServer: {

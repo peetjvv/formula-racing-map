@@ -1,0 +1,10 @@
+{
+  "breakpoint-tablet": "1023px",
+  "breakpoint-mobile": "767px",
+
+  "top-panel-height": 200,
+
+  "pt-white": "#fefefe",
+  "pt-black": "#141414",
+  "pt-blue": "#1A79BC"
+}

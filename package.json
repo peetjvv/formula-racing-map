@@ -1,11 +1,12 @@
 {
   "name": "formula-racing-map",
   "version": "0.0.1",
-  "description": "React app of a map displaying the formula 1, 2, 3 and E races schedule",
+  "description": "React app of a map displaying the Formula 1, 2, 3 and E races schedule",
   "main": "index.tsx",
   "scripts": {
     "start": "webpack serve",
-    "build": "webpack --env.production"
+    "clean": "rimraf build",
+    "build": "npm run clean && webpack"
   },
   "author": "Peet Janse van Vuuren",
   "license": "MIT",
@@ -18,6 +19,10 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-map-gl": "^5.2.11"
@@ -27,16 +32,18 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-map-gl": "^5.2.9",
     "css-loader": "^5.0.1",
+    "file-loader": "^6.2.0",
     "html-loader": "^1.3.2",
     "html-webpack-plugin": "^4.5.0",
     "json-loader": "^0.5.7",
     "modernizr-loader": "^1.0.1",
     "node-sass-json-importer": "^4.3.0",
+    "rimraf": "^3.0.2",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.12",
     "typescript": "^4.1.3",
-    "webpack": "^5.10.3",
+    "webpack": "^5.11.0",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
   }
