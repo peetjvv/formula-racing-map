@@ -2,8 +2,57 @@
   display: flex;
   flex-direction: column;
 
-  border-radius: 0.5rem;
+  border-radius: $global-radius;
   border: 1px solid $pt-black;
 
   background-color: $pt-white;
+
+  .map-control-button {
+    position: relative;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+
+    transition: background-color 0.25s ease-in-out;
+    &:not(.disabled) {
+      &:hover {
+        cursor: pointer;
+        background-color: lighten($pt-black, 80%);
+      }
+    }
+
+    &.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &:first-child {
+      border-top-left-radius: $global-radius;
+      border-top-right-radius: $global-radius;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid $pt-black;
+    }
+    &:last-child {
+      border-bottom-left-radius: $global-radius;
+      border-bottom-right-radius: $global-radius;
+    }
+
+    svg {
+      &:hover {
+        transition: 0.25s;
+      }
+    }
+
+    span {
+      position: absolute;
+      bottom: 2px;
+      right: 10px;
+
+      font-size: 0.25rem;
+
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+    }
+  }
 }
