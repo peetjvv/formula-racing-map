@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import ReactMapGl from 'react-map-gl';
+import ReactMapGl, { ScaleControl } from 'react-map-gl';
 import { MyViewportProps } from '../types/mapbox';
 import MapboxGeocoder from './components/mapbox-geocoder';
 import MapControlsToolbar from './components/map-controls-toolbar';
@@ -15,6 +15,8 @@ const App: React.FC<{}> = () => {
     latitude: 48.3419023,
     longitude: 8.8835719,
     zoom: 3,
+    minZoom: 1,
+    maxZoom: 21,
     bearing: 0,
     pitch: 0,
   });
@@ -49,11 +51,16 @@ const App: React.FC<{}> = () => {
           doubleClickZoom={false}
           clickRadius={5}
           getCursor={({ isHovering, isDragging }) =>
-            isHovering ? 'pointer' : 'default'
+            isDragging ? 'grabbing' : isHovering ? 'pointer' : 'default'
           }
-        ></ReactMapGl>
+        >
+          <div className="scale-controls-container">
+            <ScaleControl maxWidth={100} unit={'metric'} />
+            <ScaleControl maxWidth={100} unit={'imperial'} />
+          </div>
+        </ReactMapGl>
         <div className="map-controls-container top left">
-          <MapboxGeocoder />
+          <MapboxGeocoder viewport={viewport} setViewport={setViewport} />
         </div>
         <div className="map-controls-container top right">
           <MapControlsToolbar viewport={viewport} setViewport={setViewport} />

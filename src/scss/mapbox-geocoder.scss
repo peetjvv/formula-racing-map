@@ -1,7 +1,70 @@
 .mapbox-geocoder {
-  padding: 1rem;
-  border-radius: $global-radius;
-  border: 1px solid $pt-black;
+  .mapbox-geocoder-input-container {
+    display: flex;
+    align-items: center;
 
-  background-color: $pt-white;
+    padding: 0.75rem;
+    border-radius: $global-radius;
+
+    background-color: $pt-white;
+
+    cursor: text;
+
+    svg {
+      margin-right: 0.5rem;
+    }
+
+    input[type='search'] {
+      border: none;
+      padding: unset;
+      box-sizing: unset;
+
+      &:focus {
+        outline: unset;
+      }
+    }
+
+    transition: width 0.5s ease-in-out; // TODO: make it work
+    &:focus,
+    &:focus-within {
+      min-width: 300px; // might be overwritten by inline styles
+
+      input {
+        width: 300px - 28px; // fallback
+      }
+    }
+  }
+
+  .mapbox-geocoder-results {
+    border-bottom-left-radius: $global-radius;
+    border-bottom-right-radius: $global-radius;
+    background-color: $pt-white;
+
+    div {
+      padding: 0.25rem 0.5rem;
+
+      cursor: pointer;
+
+      transition: background-color 0.25s ease-in-out;
+      &:hover {
+        background-color: lighten($pt-black, 80%);
+      }
+      &:last-child {
+        border-bottom-left-radius: $global-radius;
+        border-bottom-right-radius: $global-radius;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $pt-black;
+      }
+    }
+  }
+
+  &.is-open {
+    .mapbox-geocoder-input-container {
+      border-bottom-left-radius: unset;
+      border-bottom-right-radius: unset;
+      border-bottom: 1px solid $pt-black;
+    }
+  }
 }

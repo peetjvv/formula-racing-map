@@ -26,6 +26,20 @@
         }
       }
 
+      .scale-controls-container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        bottom: 3rem;
+        right: 0;
+
+        .mapboxgl-ctrl-scale {
+          border-color: $pt-black;
+          color: $pt-black;
+        }
+      }
+
       .map-controls-container {
         position: absolute;
         $placement-offset: 1rem;

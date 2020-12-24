@@ -7,6 +7,8 @@ export type MyViewportProps = Pick<
   | 'latitude'
   | 'longitude'
   | 'zoom'
+  | 'minZoom'
+  | 'maxZoom'
   | 'pitch'
   | 'bearing'
   | 'transitionDuration'

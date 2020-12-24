@@ -49,7 +49,7 @@ const MapControlsToolbar: React.FC<{
   return (
     <div className="map-controls-toolbar">
       <MapControlButton
-        disabled={viewport.zoom === 21}
+        disabled={viewport.zoom === viewport.maxZoom}
         icon={FaSolidIcons.faPlus}
         onClick={() =>
           setViewport({
@@ -58,9 +58,10 @@ const MapControlsToolbar: React.FC<{
             transitionDuration,
           })
         }
+        value={viewport.zoom}
       />
       <MapControlButton
-        disabled={viewport.zoom === 1}
+        disabled={viewport.zoom === viewport.minZoom}
         icon={FaSolidIcons.faMinus}
         onClick={() =>
           setViewport({

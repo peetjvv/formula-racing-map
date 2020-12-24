@@ -5,6 +5,31 @@ body {
   font-size: 1rem;
   color: $pt-black;
 
+  input {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  // remove input clear 'X' icon
+  input[type='search'] {
+    // ie
+    &::-ms-clear,
+    &::-ms-reveal {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    // chrome
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      display: none;
+    }
+  }
+
   h1 {
     font-size: 2rem;
   }
