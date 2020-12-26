@@ -13,3 +13,5 @@ export type MyViewportProps = Pick<
   | 'bearing'
   | 'transitionDuration'
 >;
+
+export type MapStyleName = 'streets' | 'satellite-streets';

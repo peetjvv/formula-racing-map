@@ -1,0 +1,35 @@
+.map-style-toolbar {
+  display: flex;
+  border: 1px solid $pt-black;
+  border-radius: $global-radius;
+  background-color: $pt-white;
+
+  .map-style-button {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+
+    transition: background-color 0.25s ease-in-out;
+    &:not(.selected) {
+      &:hover {
+        background-color: lighten($pt-blue, 50%);
+      }
+    }
+
+    &:first-child {
+      border-top-left-radius: $global-radius;
+      border-bottom-left-radius: $global-radius;
+    }
+    &:not(:last-child) {
+      border-right: 1px solid $pt-black;
+    }
+    &:last-child {
+      border-top-right-radius: $global-radius;
+      border-bottom-right-radius: $global-radius;
+    }
+
+    &.selected {
+      background-color: lighten($pt-blue, 25%);
+    }
+  }
+}

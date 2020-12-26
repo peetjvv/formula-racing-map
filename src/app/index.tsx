@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import ReactMapGl, { ScaleControl } from 'react-map-gl';
-import { MyViewportProps } from '../types/mapbox';
+import ReactMapGl, { Layer, ScaleControl } from 'react-map-gl';
+import { MapStyleName, MyViewportProps } from '../types/mapbox';
 import MapboxGeocoder from './components/mapbox-geocoder';
 import MapControlsToolbar from './components/map-controls-toolbar';
 import vars from '../scss/vars';
+import MapStyleToolbar from './components/map-style-toolbar';
 
 const App: React.FC<{}> = () => {
   const mapRef = useRef<ReactMapGl | null>(null);
 
+  const [mapStyle, setMapStyle] = useState<MapStyleName>('streets');
   const [viewport, setViewport] = useState<MyViewportProps>({
     width: 400,
     height: 400,
@@ -47,13 +49,23 @@ const App: React.FC<{}> = () => {
           onViewportChange={v => setViewport(v)}
           mapboxApiAccessToken={process.env.MAPBOX_TOKEN}
           ref={mapRef}
-          mapStyle={'mapbox://styles/mapbox/streets-v11'}
+          mapStyle={`mapbox://styles/mapbox/${mapStyle}-v11`} // this hack will only work if there is a map style url that map style name fits into like this
           doubleClickZoom={false}
           clickRadius={5}
           getCursor={({ isHovering, isDragging }) =>
             isDragging ? 'grabbing' : isHovering ? 'pointer' : 'default'
           }
         >
+          {/* <Layer
+            {...{
+              id: 'landuse_park',
+              type: 'fill',
+              source: 'mapbox',
+              'source-layer': 'landuse',
+              filter: ['==', 'class', 'park'],
+            }}
+            paint={{ 'fill-color': '#ff0000' }}
+          /> */}
           <div className="scale-controls-container">
             <ScaleControl maxWidth={100} unit={'metric'} />
             <ScaleControl maxWidth={100} unit={'imperial'} />
@@ -64,6 +76,9 @@ const App: React.FC<{}> = () => {
         </div>
         <div className="map-controls-container top right">
           <MapControlsToolbar viewport={viewport} setViewport={setViewport} />
+        </div>
+        <div className="map-controls-container bottom left">
+          <MapStyleToolbar value={mapStyle} onChange={setMapStyle} />
         </div>
       </div>
     </div>

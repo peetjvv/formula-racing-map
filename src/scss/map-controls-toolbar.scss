@@ -16,7 +16,7 @@
     transition: background-color 0.25s ease-in-out;
     &:not(.disabled) {
       &:hover {
-        background-color: lighten($pt-black, 80%);
+        background-color: lighten($pt-blue, 50%);
       }
     }
 
