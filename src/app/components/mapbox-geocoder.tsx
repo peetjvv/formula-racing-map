@@ -8,7 +8,7 @@ import AutosizeInput from 'react-input-autosize';
 import {
   MAPBOX_TRANSITION_DURATION_LONG,
   MAPBOX_TRANSITION_DURATION_SHORT,
-} from '../consts';
+} from '../../consts';
 import { isCoord } from '../../util/regex';
 import { MyViewportProps } from '../../types/mapbox';
 

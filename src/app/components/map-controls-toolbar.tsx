@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as FaSolidIcons from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { MyViewportProps } from '../../types/mapbox';
-import { MAPBOX_TRANSITION_DURATION_SHORT } from '../consts';
+import { MAPBOX_TRANSITION_DURATION_SHORT } from '../../consts';
 
 const MapControlButton: React.FC<{
   className?: string;
