@@ -1,4 +1,6 @@
 .mapbox-geocoder {
+  border-radius: $global-radius;
+
   .mapbox-geocoder-input-container {
     display: flex;
     align-items: center;
@@ -23,19 +25,26 @@
         outline: unset;
       }
     }
-
-    transition: width 0.5s ease-in-out; // TODO: make it work
-    &:focus,
-    &:focus-within {
-      min-width: 300px; // might be overwritten by inline styles
-
-      input {
-        width: 300px - 28px; // fallback
-      }
-    }
   }
 
   .mapbox-geocoder-results {
+    // open animation
+    animation: rotateX 400ms ease-in-out forwards;
+    transform-origin: top center;
+    @keyframes rotateX {
+      0% {
+        opacity: 0;
+        transform: rotateX(-90deg);
+      }
+      70% {
+        transform: rotateX(-20deg);
+      }
+      100% {
+        opacity: 1;
+        transform: rotateX(0deg);
+      }
+    }
+
     border-bottom-left-radius: $global-radius;
     border-bottom-right-radius: $global-radius;
     background-color: $pt-white;
@@ -56,6 +65,16 @@
 
       &:not(:last-child) {
         border-bottom: 1px solid $pt-black;
+      }
+    }
+
+    &.no-results {
+      div {
+        cursor: not-allowed;
+        font-style: italic;
+        &:hover {
+          background-color: unset;
+        }
       }
     }
   }

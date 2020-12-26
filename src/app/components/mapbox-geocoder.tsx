@@ -4,8 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as FaSolidIcons from '@fortawesome/free-solid-svg-icons';
 import { Geometry, Position } from 'geojson';
 import axios from 'axios';
+import AutosizeInput from 'react-input-autosize';
+import {
+  MAPBOX_TRANSITION_DURATION_LONG,
+  MAPBOX_TRANSITION_DURATION_SHORT,
+} from '../consts';
+import { isCoord } from '../../util/regex';
 import { MyViewportProps } from '../../types/mapbox';
-import { isCoord } from '../../regex';
 
 type MapboxGeocodeFeature = {
   bbox: number[];
@@ -32,7 +37,7 @@ const getMapboxGeocodeResults = async (
   searchString: string,
   proximity: Position
 ) => {
-  let requestUrl: string;
+  let requestUrl: string = 'https://api.mapbox.com/v4/geocode/mapbox.places/';
   if (isCoord(searchString)) {
     const searchStringCoord: Position = searchString
       .replace(/\s/, '')
@@ -40,13 +45,15 @@ const getMapboxGeocodeResults = async (
       .map(v => Number(v))
       .reverse();
 
-    requestUrl = `https://api.mapbox.com/v4/geocode/mapbox.places/${searchStringCoord[0]},${searchStringCoord[1]}.json?access_token=${process.env.MAPBOX_TOKEN}`;
+    requestUrl =
+      requestUrl +
+      `${searchStringCoord[0]},${searchStringCoord[1]}.json?access_token=${process.env.MAPBOX_TOKEN}`;
   } else {
-    requestUrl = `https://api.mapbox.com/v4/geocode/mapbox.places/${encodeURI(
-      searchString
-    )}.json?access_token=${process.env.MAPBOX_TOKEN}&proximity=${
-      proximity[0]
-    },${proximity[1]}`;
+    requestUrl =
+      requestUrl +
+      `${encodeURI(searchString)}.json?access_token=${
+        process.env.MAPBOX_TOKEN
+      }&proximity=${proximity[0]},${proximity[1]}`;
   }
 
   return await axios.get<MapboxGeocodeReponse>(requestUrl, {});
@@ -58,15 +65,15 @@ const MapboxGeocoder: React.FC<{
 }> = props => {
   const { viewport, setViewport } = props;
 
-  const inputContainerRef = useRef<HTMLDivElement>(null);
-  const resultsContainerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchString, setSearchString] = useState<string>('');
 
   const [searchResults, setSearchResults] = useState<MapboxGeocodeFeature[]>(
     []
   );
+  const [isResultsOpen, setIsResultsOpen] = useState(false);
 
   const searchDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
@@ -76,48 +83,99 @@ const MapboxGeocoder: React.FC<{
     searchDebounceTimerRef.current = setTimeout(() => {
       if (!searchString) {
         setSearchResults([]);
+        if (isResultsOpen) {
+          setIsResultsOpen(false);
+        }
       } else {
         getMapboxGeocodeResults(searchString, [
           viewport.longitude,
           viewport.latitude,
-        ]).then(response => setSearchResults(response.data.features));
+        ]).then(response => {
+          const results = response.data.features;
+          setSearchResults(results);
+          if (!isResultsOpen) {
+            setIsResultsOpen(true);
+          }
+        });
       }
     }, 500);
   }, [searchString]);
 
-  const isOpen = !!searchResults && !!searchResults.length;
+  // close on offclick
+  useEffect(() => {
+    const documentBodyClickHandler = (e: MouseEvent) => {
+      if (
+        !!containerRef &&
+        !!containerRef.current &&
+        !containerRef.current.contains(e.target as Node | null)
+      ) {
+        setIsResultsOpen(false);
+      }
+    };
+
+    window.document.body.addEventListener('click', documentBodyClickHandler);
+
+    return () =>
+      window.document.body.removeEventListener(
+        'click',
+        documentBodyClickHandler
+      );
+  }, []);
 
   return (
-    <div className={`mapbox-geocoder ${isOpen ? 'is-open' : ''}`}>
+    <div
+      ref={containerRef}
+      className={`mapbox-geocoder ${isResultsOpen ? 'is-open' : ''}`}
+    >
       <div
-        ref={inputContainerRef}
         className="mapbox-geocoder-input-container"
         onClick={() => {
           if (!!inputRef && !!inputRef.current) {
             inputRef.current.focus();
           }
+
+          if (!isResultsOpen && !!searchResults.length) {
+            setIsResultsOpen(true);
+          }
         }}
       >
         <FontAwesomeIcon icon={FaSolidIcons.faSearch} />
-        <input
-          ref={inputRef}
-          style={{
-            width:
-              !!inputContainerRef && !!inputContainerRef.current
-                ? inputContainerRef.current.clientWidth - 30
-                : undefined,
-          }}
+        <AutosizeInput
+          inputRef={ref => (inputRef.current = ref)}
           type="search"
           value={searchString}
           onChange={e => setSearchString(e.target.value)}
           placeholder="Search..."
+          minWidth={150}
         />
       </div>
-      {isOpen ? (
-        <div ref={resultsContainerRef} className="mapbox-geocoder-results">
-          {searchResults.map((feature, idx) => (
-            <div key={idx}>{feature.place_name}</div>
-          ))}
+      {isResultsOpen ? (
+        <div
+          className={`mapbox-geocoder-results ${
+            !searchResults.length ? 'no-results' : ''
+          }`}
+        >
+          {!!searchResults.length ? (
+            searchResults.map((feature, idx) => (
+              <div
+                key={idx}
+                onClick={() => {
+                  setViewport({
+                    ...viewport,
+                    latitude: feature.center[1],
+                    longitude: feature.center[0],
+                    zoom: viewport.zoom >= 14 ? viewport.zoom : 14,
+                    transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
+                  });
+                  setIsResultsOpen(false);
+                }}
+              >
+                {feature.place_name}
+              </div>
+            ))
+          ) : (
+            <div>No results</div>
+          )}
         </div>
       ) : null}
     </div>

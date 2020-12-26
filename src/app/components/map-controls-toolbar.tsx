@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as FaSolidIcons from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { MyViewportProps } from '../../types/mapbox';
+import { MAPBOX_TRANSITION_DURATION_SHORT } from '../consts';
 
 const MapControlButton: React.FC<{
   className?: string;
@@ -44,8 +45,6 @@ const MapControlsToolbar: React.FC<{
 }> = props => {
   const { viewport, setViewport } = props;
 
-  const transitionDuration = 500;
-
   return (
     <div className="map-controls-toolbar">
       <MapControlButton
@@ -55,7 +54,7 @@ const MapControlsToolbar: React.FC<{
           setViewport({
             ...viewport,
             zoom: viewport.zoom + 1,
-            transitionDuration,
+            transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
           })
         }
         value={viewport.zoom}
@@ -67,7 +66,7 @@ const MapControlsToolbar: React.FC<{
           setViewport({
             ...viewport,
             zoom: viewport.zoom - 1,
-            transitionDuration,
+            transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
           })
         }
       />
@@ -77,7 +76,11 @@ const MapControlsToolbar: React.FC<{
           icon={FaSolidIcons.faLocationArrow}
           iconStyle={{ transform: `rotate(${viewport.bearing - 45}deg)` }}
           onClick={() =>
-            setViewport({ ...viewport, bearing: 0, transitionDuration })
+            setViewport({
+              ...viewport,
+              bearing: 0,
+              transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
+            })
           }
           value={viewport.bearing}
         />
@@ -87,7 +90,11 @@ const MapControlsToolbar: React.FC<{
           disabled={viewport.pitch === 0}
           icon={FaSolidIcons.faMagic}
           onClick={() =>
-            setViewport({ ...viewport, pitch: 0, transitionDuration })
+            setViewport({
+              ...viewport,
+              pitch: 0,
+              transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
+            })
           }
           value={viewport.pitch}
         />
