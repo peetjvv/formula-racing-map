@@ -88,7 +88,7 @@ const MapControlsToolbar: React.FC<{
       {viewport['pitch'] !== undefined ? (
         <MapControlButton
           disabled={viewport.pitch === 0}
-          icon={FaSolidIcons.faMagic}
+          icon={FaSolidIcons.faRoad}
           onClick={() =>
             setViewport({
               ...viewport,
