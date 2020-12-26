@@ -9,24 +9,32 @@ body {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
-  }
 
-  // remove input clear 'X' icon
-  input[type='search'] {
-    // ie
-    &::-ms-clear,
-    &::-ms-reveal {
-      display: none;
-      width: 0;
-      height: 0;
+    &::placeholder,
+    &::-moz-placeholder,
+    &::-webkit-input-placeholder {
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
     }
 
-    // chrome
-    &::-webkit-search-decoration,
-    &::-webkit-search-cancel-button,
-    &::-webkit-search-results-button,
-    &::-webkit-search-results-decoration {
-      display: none;
+    // remove input clear 'X' icon
+    &[type='search'] {
+      // ie
+      &::-ms-clear,
+      &::-ms-reveal {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+
+      // chrome
+      &::-webkit-search-decoration,
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-results-button,
+      &::-webkit-search-results-decoration {
+        display: none;
+      }
     }
   }
 

@@ -143,7 +143,7 @@ const MapboxGeocoder: React.FC<{
           value={searchString}
           onChange={e => setSearchString(e.target.value)}
           placeholder="Search..."
-          minWidth={150}
+          minWidth={200}
         />
       </div>
       {isResultsOpen ? (
