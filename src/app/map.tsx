@@ -7,6 +7,7 @@ import vars from '../scss/vars';
 import MapStyleToolbar from './components/map-style-toolbar';
 import { AllActions } from '../data';
 import { MapStyleName, MyViewportProps } from '../data/mapbox/types';
+import { throwIfNotNever } from '../util/typescript';
 
 const Map: React.FC<{
   mapStyle: MapStyleName;
@@ -16,6 +17,20 @@ const Map: React.FC<{
   const { mapStyle, viewport, dispatch } = props;
 
   const mapRef = useRef<ReactMapGl | null>(null);
+
+  let mapStyleUrl: string | undefined;
+  switch (mapStyle) {
+    case 'streets':
+      mapStyleUrl = `mapbox://styles/mapbox/streets-v11`;
+      break;
+    case 'satellite-streets':
+      mapStyleUrl = `mapbox://styles/mapbox/satellite-streets-v11`;
+      break;
+
+    default:
+      throwIfNotNever(mapStyle);
+      break;
+  }
 
   const setViewport = (vp: MyViewportProps) =>
     dispatch({ type: 'MAPBOX', subType: 'SET_VIEWPORT', payload: vp });
@@ -44,7 +59,7 @@ const Map: React.FC<{
         onViewportChange={v => setViewport(v)}
         mapboxApiAccessToken={process.env.MAPBOX_TOKEN}
         ref={mapRef}
-        mapStyle={`mapbox://styles/mapbox/${mapStyle}-v11`} // this hack will only work if there is a map style url that map style name fits into like this
+        mapStyle={mapStyleUrl}
         doubleClickZoom={false}
         clickRadius={5}
         getCursor={({ isHovering, isDragging }) =>
