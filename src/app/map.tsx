@@ -6,16 +6,19 @@ import MapboxGeocoder from './components/mapbox-geocoder';
 import MapControlsToolbar from './components/map-controls-toolbar';
 import vars from '../scss/vars';
 import MapStyleToolbar from './components/map-style-toolbar';
+import { AllActions } from '../data';
 
 const Map: React.FC<{
   viewport: MyViewportProps;
-  setViewport: (vp: MyViewportProps) => void;
+  dispatch: React.Dispatch<AllActions>;
 }> = props => {
-  const { viewport, setViewport } = props;
+  const { viewport, dispatch } = props;
 
   const mapRef = useRef<ReactMapGl | null>(null);
 
   const [mapStyle, setMapStyle] = useState<MapStyleName>('streets');
+  const setViewport = (vp: MyViewportProps) =>
+    dispatch({ type: 'MAPBOX', subType: 'SET_VIEWPORT', payload: vp });
 
   useEffect(() => {
     const initialViewport: MyViewportProps = {
