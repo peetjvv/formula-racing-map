@@ -2,8 +2,8 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as FaSolidIcons from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { MapStyleName } from '../../types/mapbox';
 import { throwIfNotNever } from '../../util/typescript';
+import { MapStyleName } from '../../data/mapbox/types';
 
 const MapStyleButton: React.FC<{
   name: MapStyleName;

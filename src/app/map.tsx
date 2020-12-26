@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import ReactMapGl, { Layer, ScaleControl } from 'react-map-gl';
-import { MapStyleName, MyViewportProps } from '../types/mapbox';
 import MapboxGeocoder from './components/mapbox-geocoder';
 import MapControlsToolbar from './components/map-controls-toolbar';
 import vars from '../scss/vars';
 import MapStyleToolbar from './components/map-style-toolbar';
 import { AllActions } from '../data';
+import { MapStyleName, MyViewportProps } from '../data/mapbox/types';
 
 const Map: React.FC<{
+  mapStyle: MapStyleName;
   viewport: MyViewportProps;
   dispatch: React.Dispatch<AllActions>;
 }> = props => {
-  const { viewport, dispatch } = props;
+  const { mapStyle, viewport, dispatch } = props;
 
   const mapRef = useRef<ReactMapGl | null>(null);
 
-  const [mapStyle, setMapStyle] = useState<MapStyleName>('streets');
   const setViewport = (vp: MyViewportProps) =>
     dispatch({ type: 'MAPBOX', subType: 'SET_VIEWPORT', payload: vp });
 
@@ -73,7 +73,16 @@ const Map: React.FC<{
         <MapControlsToolbar viewport={viewport} setViewport={setViewport} />
       </div>
       <div className="map-controls-container bottom left">
-        <MapStyleToolbar value={mapStyle} onChange={setMapStyle} />
+        <MapStyleToolbar
+          value={mapStyle}
+          onChange={style =>
+            dispatch({
+              type: 'MAPBOX',
+              subType: 'SET_MAP_STYLE',
+              payload: style,
+            })
+          }
+        />
       </div>
     </div>
   );

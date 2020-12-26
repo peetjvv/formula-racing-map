@@ -9,7 +9,11 @@ const App: React.FC<{}> = () => {
   return (
     <div className="content">
       <div className="top-panel">Hallo there</div>
-      <Map viewport={state.mapbox.viewport} dispatch={dispatch} />
+      <Map
+        mapStyle={state.mapbox.mapStyle}
+        viewport={state.mapbox.viewport}
+        dispatch={dispatch}
+      />
     </div>
   );
 };

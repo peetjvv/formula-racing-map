@@ -1,9 +1,31 @@
-import { MyViewportProps } from '../../types/mapbox';
+import { ViewportProps } from 'react-map-gl';
 import { PayloadAction } from '../../types/reducer';
 
-export type MapboxState = { viewport: MyViewportProps };
+export type MyViewportProps = Pick<
+  ViewportProps,
+  | 'width'
+  | 'height'
+  | 'latitude'
+  | 'longitude'
+  | 'zoom'
+  | 'minZoom'
+  | 'maxZoom'
+  | 'pitch'
+  | 'bearing'
+  | 'transitionDuration'
+>;
+
+export type MapStyleName = 'streets' | 'satellite-streets';
+
+export type MapboxState = { mapStyle: MapStyleName; viewport: MyViewportProps };
 
 type MapboxActionType = 'MAPBOX';
+
+type SetMapStyleAction = PayloadAction<
+  MapboxActionType,
+  'SET_MAP_STYLE',
+  MapStyleName
+>;
 
 type SetViewportAction = PayloadAction<
   MapboxActionType,
@@ -11,4 +33,4 @@ type SetViewportAction = PayloadAction<
   MyViewportProps
 >;
 
-export type MapboxAction = SetViewportAction;
+export type MapboxAction = SetMapStyleAction | SetViewportAction;

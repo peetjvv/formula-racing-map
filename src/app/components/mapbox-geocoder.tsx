@@ -5,12 +5,9 @@ import * as FaSolidIcons from '@fortawesome/free-solid-svg-icons';
 import { Geometry, Position } from 'geojson';
 import axios from 'axios';
 import AutosizeInput from 'react-input-autosize';
-import {
-  MAPBOX_TRANSITION_DURATION_LONG,
-  MAPBOX_TRANSITION_DURATION_SHORT,
-} from '../../consts';
+import { MAPBOX_TRANSITION_DURATION_SHORT } from '../../consts';
 import { isCoord } from '../../util/regex';
-import { MyViewportProps } from '../../types/mapbox';
+import { MyViewportProps } from '../../data/mapbox/types';
 
 type MapboxGeocodeFeature = {
   bbox: number[];

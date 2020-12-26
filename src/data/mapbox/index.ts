@@ -4,6 +4,7 @@ import { MapboxAction, MapboxState } from './types';
 import { State } from '../';
 
 export const initialState: MapboxState = {
+  mapStyle: 'streets',
   viewport: {
     width: 400,
     height: 400,
@@ -19,6 +20,11 @@ export const initialState: MapboxState = {
 
 export const reducer: Reducer<State, MapboxAction> = (state, action) => {
   switch (action.subType) {
+    case 'SET_MAP_STYLE':
+      return {
+        ...state,
+        mapbox: { ...state.mapbox, mapStyle: action.payload },
+      };
     case 'SET_VIEWPORT':
       return {
         ...state,
@@ -26,7 +32,7 @@ export const reducer: Reducer<State, MapboxAction> = (state, action) => {
       };
 
     default:
-      throwIfNotNever(action.subType);
+      throwIfNotNever(action);
       return state;
   }
 };
