@@ -3,23 +3,23 @@ import { PayloadAction } from '../types/reducer';
 import { throwIfNotNever } from '../util/typescript';
 import { State } from './';
 
-export type DateSliderState = { minValue: Date; maxValue: Date };
+export type DateSliderState = { minValue: string; maxValue: string };
 
 type ChangeMinValueAction = PayloadAction<
   'DATE_SLIDER',
   'CHANGE_MIN_VALUE',
-  Date
+  string
 >;
 type ChangeMaxValueAction = PayloadAction<
   'DATE_SLIDER',
   'CHANGE_MAX_VALUE',
-  Date
+  string
 >;
 export type DateSliderAction = ChangeMinValueAction | ChangeMaxValueAction;
 
 export const initialState: DateSliderState = {
-  minValue: new Date(2021, 3, 5),
-  maxValue: new Date(2021, 7, 19),
+  minValue: new Date(2021, 3, 5).toISOString(),
+  maxValue: new Date(2021, 7, 19).toISOString(),
 };
 
 export const reducer: Reducer<State, DateSliderAction> = (state, action) => {

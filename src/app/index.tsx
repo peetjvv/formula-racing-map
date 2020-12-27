@@ -1,10 +1,14 @@
+import { DateTime } from 'luxon';
 import * as React from 'react';
 import { useReducer } from 'react';
-import { combinedReducer, initialState } from '../data';
+import { AllActions, combinedReducer, initialState, State } from '../data';
+import createPersistedReducer from '../util/use-persisted-reducer';
 import Map from './map';
 
+const usePersistedReducer = createPersistedReducer<State, AllActions>('state');
+
 const App: React.FC<{}> = () => {
-  const [state, dispatch] = useReducer(combinedReducer, initialState);
+  const [state, dispatch] = usePersistedReducer(combinedReducer, initialState);
 
   return (
     <div className="content">
@@ -12,8 +16,8 @@ const App: React.FC<{}> = () => {
       <Map
         mapStyle={state.mapbox.mapStyle}
         viewport={state.mapbox.viewport}
-        dateSliderMinValue={state.dateSlider.minValue}
-        dateSliderMaxValue={state.dateSlider.maxValue}
+        dateSliderMinValue={DateTime.fromISO(state.dateSlider.minValue)}
+        dateSliderMaxValue={DateTime.fromISO(state.dateSlider.maxValue)}
         dispatch={dispatch}
       />
     </div>

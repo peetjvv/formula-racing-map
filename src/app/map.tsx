@@ -9,13 +9,14 @@ import { AllActions } from '../data';
 import { MapStyleName, MyViewportProps } from '../data/mapbox/types';
 import { throwIfNotNever } from '../util/typescript';
 import DateRangeSlider from './components/date-range-slider';
+import { DateTime } from 'luxon';
 
 const Map: React.FC<{
   mapStyle: MapStyleName;
   viewport: MyViewportProps;
 
-  dateSliderMinValue: Date;
-  dateSliderMaxValue: Date;
+  dateSliderMinValue: DateTime;
+  dateSliderMaxValue: DateTime;
 
   dispatch: React.Dispatch<AllActions>;
 }> = props => {
@@ -128,22 +129,22 @@ const Map: React.FC<{
         }}
       >
         <DateRangeSlider
-          min={new Date(2021, 0, 1)}
-          max={new Date(2021, 11, 31)}
+          min={DateTime.fromJSDate(new Date(2021, 0, 1))}
+          max={DateTime.fromJSDate(new Date(2021, 11, 31))}
           minValue={dateSliderMinValue}
           maxValue={dateSliderMaxValue}
           onMinValueChange={v =>
             dispatch({
               type: 'DATE_SLIDER',
               subType: 'CHANGE_MIN_VALUE',
-              payload: v,
+              payload: v.toISO(),
             })
           }
           onMaxValueChange={v =>
             dispatch({
               type: 'DATE_SLIDER',
               subType: 'CHANGE_MAX_VALUE',
-              payload: v,
+              payload: v.toISO(),
             })
           }
         />

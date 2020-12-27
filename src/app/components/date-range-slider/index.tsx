@@ -2,12 +2,12 @@ import * as React from 'react';
 import { DateTime } from 'luxon';
 
 type DateRangeSliderProps = {
-  min: Date;
-  max: Date;
-  minValue: Date;
-  maxValue: Date;
-  onMinValueChange: (v: Date) => void;
-  onMaxValueChange: (v: Date) => void;
+  min: DateTime;
+  max: DateTime;
+  minValue: DateTime;
+  maxValue: DateTime;
+  onMinValueChange: (v: DateTime) => void;
+  onMaxValueChange: (v: DateTime) => void;
 };
 
 const calculateValuePercInRange = (
@@ -42,24 +42,21 @@ const DateRangeSlider: React.FC<DateRangeSliderProps> = props => {
   }
 
   const sliderMinFromLeftPerc = calculateValuePercInRange(
-    minValue.getTime(),
-    min.getTime(),
-    max.getTime()
+    minValue.toMillis(),
+    min.toMillis(),
+    max.toMillis()
   );
   const sliderMaxFromLeftPerc = calculateValuePercInRange(
-    maxValue.getTime(),
-    min.getTime(),
-    max.getTime()
+    maxValue.toMillis(),
+    min.toMillis(),
+    max.toMillis()
   );
   const sliderWidth = sliderMaxFromLeftPerc - sliderMinFromLeftPerc;
-
-  const minDateTime = DateTime.fromJSDate(min);
-  const maxDateTime = DateTime.fromJSDate(max);
 
   return (
     <div className="date-range-slider-container">
       <div className="date-range-slider">
-        <label className="min-label">{minDateTime.toFormat('d LLL')}</label>
+        <label className="min-label">{min.toFormat('d LLL')}</label>
         <div className="track">
           <div className="track-background" />
           <div
@@ -73,7 +70,7 @@ const DateRangeSlider: React.FC<DateRangeSliderProps> = props => {
             <div className="track-slider-knob right" />
           </div>
         </div>
-        <label className="max-label">{maxDateTime.toFormat('d LLL')}</label>
+        <label className="max-label">{max.toFormat('d LLL')}</label>
       </div>
     </div>
   );
