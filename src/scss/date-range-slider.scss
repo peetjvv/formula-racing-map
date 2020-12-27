@@ -1,0 +1,59 @@
+.date-range-slider-container {
+  $track-width: 500px;
+  $track-height: 0.5rem;
+  $track-slider-knob-size: $track-height + (2 * $track-height);
+
+  padding: 0.5rem 0.75rem;
+  border-radius: $global-radius;
+  background-color: $pt-white;
+
+  .date-range-slider {
+    label {
+    }
+
+    .track {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: $track-width;
+      height: $track-slider-knob-size;
+
+      .track-background {
+        position: absolute;
+        width: 100%;
+        height: $track-height;
+        background-color: $pt-light-grey;
+      }
+
+      .track-slider {
+        position: absolute;
+        height: $track-height;
+        background-color: $pt-blue;
+
+        .track-slider-knob {
+          position: absolute;
+
+          width: $track-slider-knob-size;
+          height: $track-slider-knob-size;
+          border-radius: 1000px;
+
+          background-color: $pt-blue;
+          transition: background-color 0.25s ease-in-out;
+          &:hover {
+            background-color: darken($pt-blue, 20%);
+          }
+
+          cursor: pointer;
+
+          top: -100%;
+          &.left {
+            left: ($track-slider-knob-size / 2 * -1);
+          }
+          &.right {
+            right: ($track-slider-knob-size / 2 * -1);
+          }
+        }
+      }
+    }
+  }
+}

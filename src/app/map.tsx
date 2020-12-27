@@ -8,6 +8,7 @@ import MapStyleToolbar from './components/map-style-toolbar';
 import { AllActions } from '../data';
 import { MapStyleName, MyViewportProps } from '../data/mapbox/types';
 import { throwIfNotNever } from '../util/typescript';
+import DateRangeSlider from './components/date-range-slider';
 
 const Map: React.FC<{
   mapStyle: MapStyleName;
@@ -17,6 +18,8 @@ const Map: React.FC<{
   const { mapStyle, viewport, dispatch } = props;
 
   const mapRef = useRef<ReactMapGl | null>(null);
+  const bottomCenterControlsContainerRef = useRef<HTMLDivElement | null>(null);
+  console.log(bottomCenterControlsContainerRef);
 
   let mapStyleUrl: string | undefined;
   switch (mapStyle) {
@@ -98,6 +101,22 @@ const Map: React.FC<{
             })
           }
         />
+      </div>
+      <div
+        ref={bottomCenterControlsContainerRef}
+        className="map-controls-container bottom center"
+        style={{
+          left:
+            !!bottomCenterControlsContainerRef &&
+            !!bottomCenterControlsContainerRef.current
+              ? Math.ceil(
+                  window.innerWidth / 2 -
+                    bottomCenterControlsContainerRef.current.clientWidth / 2
+                )
+              : undefined,
+        }}
+      >
+        <DateRangeSlider />
       </div>
     </div>
   );
