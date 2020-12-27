@@ -13,13 +13,24 @@ import DateRangeSlider from './components/date-range-slider';
 const Map: React.FC<{
   mapStyle: MapStyleName;
   viewport: MyViewportProps;
+
+  dateSliderMinValue: Date;
+  dateSliderMaxValue: Date;
+
   dispatch: React.Dispatch<AllActions>;
 }> = props => {
-  const { mapStyle, viewport, dispatch } = props;
+  const {
+    mapStyle,
+    viewport,
+
+    dateSliderMinValue,
+    dateSliderMaxValue,
+
+    dispatch,
+  } = props;
 
   const mapRef = useRef<ReactMapGl | null>(null);
   const bottomCenterControlsContainerRef = useRef<HTMLDivElement | null>(null);
-  console.log(bottomCenterControlsContainerRef);
 
   let mapStyleUrl: string | undefined;
   switch (mapStyle) {
@@ -116,7 +127,26 @@ const Map: React.FC<{
               : undefined,
         }}
       >
-        <DateRangeSlider />
+        <DateRangeSlider
+          min={new Date(2021, 0, 1)}
+          max={new Date(2021, 11, 31)}
+          minValue={dateSliderMinValue}
+          maxValue={dateSliderMaxValue}
+          onMinValueChange={v =>
+            dispatch({
+              type: 'DATE_SLIDER',
+              subType: 'CHANGE_MIN_VALUE',
+              payload: v,
+            })
+          }
+          onMaxValueChange={v =>
+            dispatch({
+              type: 'DATE_SLIDER',
+              subType: 'CHANGE_MAX_VALUE',
+              payload: v,
+            })
+          }
+        />
       </div>
     </div>
   );

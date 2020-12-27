@@ -12,6 +12,8 @@ const App: React.FC<{}> = () => {
       <Map
         mapStyle={state.mapbox.mapStyle}
         viewport={state.mapbox.viewport}
+        dateSliderMinValue={state.dateSlider.minValue}
+        dateSliderMaxValue={state.dateSlider.maxValue}
         dispatch={dispatch}
       />
     </div>
