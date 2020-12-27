@@ -10,7 +10,7 @@ const DateRangeSlider: React.FC<{}> = props => {
   return (
     <div className="date-range-slider-container">
       <div className="date-range-slider">
-        {/* <label>min</label> */}
+        <label className="min-label">min</label>
         <div className="track">
           <div className="track-background" />
           <div
@@ -24,7 +24,7 @@ const DateRangeSlider: React.FC<{}> = props => {
             <div className="track-slider-knob right" />
           </div>
         </div>
-        {/* <label>max</label> */}
+        <label className="max-label">max</label>
       </div>
     </div>
   );

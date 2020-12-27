@@ -1,14 +1,18 @@
 .date-range-slider-container {
   $track-width: 500px;
   $track-height: 0.5rem;
-  $track-slider-knob-size: $track-height + (2 * $track-height);
+  $track-slider-knob-size: 2 * $track-height;
 
   padding: 0.5rem 0.75rem;
   border-radius: $global-radius;
   background-color: $pt-white;
 
   .date-range-slider {
-    label {
+    display: flex;
+    align-items: center;
+
+    .min-label,
+    .max-label {
     }
 
     .track {
@@ -17,6 +21,7 @@
       align-items: center;
       width: $track-width;
       height: $track-slider-knob-size;
+      margin: 0 ($track-slider-knob-size / 2 + 0.5rem);
 
       .track-background {
         position: absolute;
@@ -29,6 +34,7 @@
         position: absolute;
         height: $track-height;
         background-color: $pt-blue;
+        cursor: pointer;
 
         .track-slider-knob {
           position: absolute;
@@ -45,7 +51,7 @@
 
           cursor: pointer;
 
-          top: -100%;
+          top: -50%;
           &.left {
             left: ($track-slider-knob-size / 2 * -1);
           }
