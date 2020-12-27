@@ -1,4 +1,4 @@
-import { Reducer, useReducer, useEffect, Dispatch } from 'react';
+import { Reducer, useReducer, useEffect, Dispatch, useRef } from 'react';
 
 type MyStorage<S> = {
   get: (key: string, initialState: S) => S;
@@ -24,12 +24,23 @@ const usePersistedReducer = <S, A>(
   reducer: Reducer<S, A>,
   initialState: S,
   key: string,
-  storage: MyStorage<S>
+  storage: MyStorage<S>,
+  storageUpdateDebounceMillis: number = 500
 ): [state: S, dispatch: Dispatch<A>] => {
   const [state, dispatch] = useReducer(reducer, storage.get(key, initialState));
 
+  const stateUpdateDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
-    storage.set(key, state);
+    if (
+      !!stateUpdateDebounceTimerRef &&
+      !!stateUpdateDebounceTimerRef.current
+    ) {
+      clearTimeout(stateUpdateDebounceTimerRef.current);
+    }
+
+    stateUpdateDebounceTimerRef.current = setTimeout(() => {
+      storage.set(key, state);
+    }, storageUpdateDebounceMillis);
   }, [state]);
 
   return [state, dispatch];
