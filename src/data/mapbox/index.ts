@@ -1,7 +1,6 @@
 import { Reducer } from 'react';
 import { throwIfNotNever } from '../../util/typescript';
 import { MapboxAction, MapboxState } from './types';
-import { State } from '../';
 
 export const initialState: MapboxState = {
   mapStyle: 'streets',
@@ -18,21 +17,24 @@ export const initialState: MapboxState = {
   },
 };
 
-export const reducer: Reducer<State, MapboxAction> = (state, action) => {
+export const reducer: Reducer<MapboxState, MapboxAction> = (
+  prevState,
+  action
+) => {
   switch (action.subType) {
     case 'SET_MAP_STYLE':
       return {
-        ...state,
-        mapbox: { ...state.mapbox, mapStyle: action.payload },
+        ...prevState,
+        mapStyle: action.payload,
       };
     case 'SET_VIEWPORT':
       return {
-        ...state,
-        mapbox: { ...state.mapbox, viewport: action.payload },
+        ...prevState,
+        viewport: action.payload,
       };
 
     default:
       throwIfNotNever(action);
-      return state;
+      return prevState;
   }
 };

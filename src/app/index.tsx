@@ -1,8 +1,7 @@
 import { DateTime } from 'luxon';
 import * as React from 'react';
-import { useReducer } from 'react';
 import { AllActions, combinedReducer, initialState, State } from '../data';
-import createPersistedReducer from '../util/use-persisted-reducer';
+import createPersistedReducer from '../util/persisted-reducer/use-persisted-reducer';
 import Map from './map';
 
 const usePersistedReducer = createPersistedReducer<State, AllActions>(
@@ -11,6 +10,7 @@ const usePersistedReducer = createPersistedReducer<State, AllActions>(
 
 const App: React.FC<{}> = () => {
   const [state, dispatch] = usePersistedReducer(combinedReducer, initialState);
+  // const [state, dispatch] = React.useReducer(combinedReducer, initialState);
 
   return (
     <div className="content">

@@ -1,24 +1,5 @@
 import { Reducer, useReducer, useEffect, Dispatch, useRef } from 'react';
-
-type MyStorage<S> = {
-  get: (key: string, initialState: S) => S;
-  set: (key: string, value: S) => void;
-};
-
-const createStorage = <S>(provider: Storage): MyStorage<S> => ({
-  get(key, initialState) {
-    const json = provider.getItem(key);
-    console.log(json, JSON.parse(json!));
-    return !json
-      ? typeof initialState === 'function'
-        ? initialState()
-        : initialState
-      : JSON.parse(json);
-  },
-  set(key, value) {
-    provider.setItem(key, JSON.stringify(value));
-  },
-});
+import { MyStorage, createStorage } from './storage';
 
 const usePersistedReducer = <S, A>(
   reducer: Reducer<S, A>,
@@ -29,7 +10,7 @@ const usePersistedReducer = <S, A>(
 ): [state: S, dispatch: Dispatch<A>] => {
   const [state, dispatch] = useReducer(
     reducer,
-    storage.get(localStorageKey, initialState)
+    storage.getItem(localStorageKey, initialState)
   );
 
   const stateUpdateDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -42,7 +23,7 @@ const usePersistedReducer = <S, A>(
     }
 
     stateUpdateDebounceTimerRef.current = setTimeout(() => {
-      storage.set(localStorageKey, state);
+      storage.setItem(localStorageKey, state);
     }, storageUpdateDebounceMillis);
   }, [state]);
 

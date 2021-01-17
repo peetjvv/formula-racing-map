@@ -1,7 +1,6 @@
 import { Reducer } from 'react';
 import { PayloadAction } from '../types/reducer';
 import { throwIfNotNever } from '../util/typescript';
-import { State } from './';
 
 export type DateSliderState = { minValue: string; maxValue: string };
 
@@ -22,21 +21,24 @@ export const initialState: DateSliderState = {
   maxValue: new Date(2021, 7, 19).toISOString(),
 };
 
-export const reducer: Reducer<State, DateSliderAction> = (state, action) => {
+export const reducer: Reducer<DateSliderState, DateSliderAction> = (
+  prevState,
+  action
+) => {
   switch (action.subType) {
     case 'CHANGE_MIN_VALUE':
       return {
-        ...state,
-        dateSlider: { ...state.dateSlider, minValue: action.payload },
+        ...prevState,
+        minValue: action.payload,
       };
     case 'CHANGE_MAX_VALUE':
       return {
-        ...state,
-        dateSlider: { ...state.dateSlider, maxValue: action.payload },
+        ...prevState,
+        maxValue: action.payload,
       };
 
     default:
       throwIfNotNever(action);
-      return state;
+      return prevState;
   }
 };

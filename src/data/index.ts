@@ -20,10 +20,16 @@ export const initialState: State = {
 export const combinedReducer: Reducer<State, AllActions> = (state, action) => {
   switch (action.type) {
     case 'MAPBOX':
-      return MapboxData.reducer(state, action);
+      return {
+        ...state,
+        mapbox: MapboxData.reducer(state.mapbox, action),
+      };
 
     case 'DATE_SLIDER':
-      return DateSliderReducer(state, action);
+      return {
+        ...state,
+        dateSlider: DateSliderReducer(state.dateSlider, action),
+      };
 
     default:
       throwIfNotNever(action);
