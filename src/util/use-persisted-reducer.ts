@@ -23,11 +23,14 @@ const createStorage = <S>(provider: Storage): MyStorage<S> => ({
 const usePersistedReducer = <S, A>(
   reducer: Reducer<S, A>,
   initialState: S,
-  key: string,
+  localStorageKey: string,
   storage: MyStorage<S>,
   storageUpdateDebounceMillis: number = 500
 ): [state: S, dispatch: Dispatch<A>] => {
-  const [state, dispatch] = useReducer(reducer, storage.get(key, initialState));
+  const [state, dispatch] = useReducer(
+    reducer,
+    storage.get(localStorageKey, initialState)
+  );
 
   const stateUpdateDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
@@ -39,7 +42,7 @@ const usePersistedReducer = <S, A>(
     }
 
     stateUpdateDebounceTimerRef.current = setTimeout(() => {
-      storage.set(key, state);
+      storage.set(localStorageKey, state);
     }, storageUpdateDebounceMillis);
   }, [state]);
 
@@ -47,7 +50,7 @@ const usePersistedReducer = <S, A>(
 };
 
 const createPersistedReducer = <S, A>(
-  key: string,
+  localStorageKey: string,
   provider: Storage = globalThis.localStorage
 ): ((
   reducer: Reducer<S, A>,
@@ -56,7 +59,12 @@ const createPersistedReducer = <S, A>(
   if (!!provider) {
     const storage = createStorage<S>(provider);
     return (reducer: Reducer<S, A>, initialState: S) =>
-      usePersistedReducer<S, A>(reducer, initialState, key, storage);
+      usePersistedReducer<S, A>(
+        reducer,
+        initialState,
+        localStorageKey,
+        storage
+      );
   }
   return (reducer: Reducer<S, A>, initialState: S) =>
     useReducer(reducer, initialState);

@@ -5,7 +5,9 @@ import { AllActions, combinedReducer, initialState, State } from '../data';
 import createPersistedReducer from '../util/use-persisted-reducer';
 import Map from './map';
 
-const usePersistedReducer = createPersistedReducer<State, AllActions>('state');
+const usePersistedReducer = createPersistedReducer<State, AllActions>(
+  'persisted-state'
+);
 
 const App: React.FC<{}> = () => {
   const [state, dispatch] = usePersistedReducer(combinedReducer, initialState);
