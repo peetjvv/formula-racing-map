@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import ReactMapGl, { Layer, ScaleControl } from 'react-map-gl';
+import ReactMapGl, { Layer, MapRef, ScaleControl } from 'react-map-gl';
 import MapboxGeocoder from './components/mapbox-geocoder';
 import MapControlsToolbar from './components/map-controls-toolbar';
 import vars from '../scss/vars';
@@ -30,7 +30,7 @@ const Map: React.FC<{
     dispatch,
   } = props;
 
-  const mapRef = useRef<ReactMapGl | null>(null);
+  const mapRef = useRef<MapRef | null>(null);
   const bottomCenterControlsContainerRef = useRef<HTMLDivElement | null>(null);
 
   let mapStyleUrl: string | undefined;
@@ -71,7 +71,7 @@ const Map: React.FC<{
     <div className="map-container">
       <ReactMapGl
         {...viewport}
-        onViewportChange={v => setViewport(v)}
+        onViewportChange={(v: MyViewportProps) => setViewport(v)}
         mapboxApiAccessToken={process.env.MAPBOX_TOKEN}
         ref={mapRef}
         mapStyle={mapStyleUrl}

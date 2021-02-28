@@ -85,8 +85,8 @@ const MapboxGeocoder: React.FC<{
         }
       } else {
         getMapboxGeocodeResults(searchString, [
-          viewport.longitude,
-          viewport.latitude,
+          viewport.longitude!,
+          viewport.latitude!,
         ]).then(response => {
           const results = response.data.features;
           setSearchResults(results);
@@ -161,7 +161,7 @@ const MapboxGeocoder: React.FC<{
                     ...viewport,
                     latitude: feature.center[1],
                     longitude: feature.center[0],
-                    zoom: viewport.zoom >= 14 ? viewport.zoom : 14,
+                    zoom: viewport.zoom! >= 14 ? viewport.zoom : 14,
                     transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
                   });
                   setIsResultsOpen(false);

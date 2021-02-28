@@ -53,7 +53,7 @@ const MapControlsToolbar: React.FC<{
         onClick={() =>
           setViewport({
             ...viewport,
-            zoom: viewport.zoom + 1,
+            zoom: viewport.zoom! + 1,
             transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
           })
         }
@@ -65,7 +65,7 @@ const MapControlsToolbar: React.FC<{
         onClick={() =>
           setViewport({
             ...viewport,
-            zoom: viewport.zoom - 1,
+            zoom: viewport.zoom! - 1,
             transitionDuration: MAPBOX_TRANSITION_DURATION_SHORT,
           })
         }
@@ -87,7 +87,7 @@ const MapControlsToolbar: React.FC<{
       ) : null}
       {viewport['pitch'] !== undefined ? (
         <MapControlButton
-          disabled={viewport.pitch === 0}
+          disabled={(viewport.pitch || 0) === 0}
           icon={FaSolidIcons.faRoad}
           onClick={() =>
             setViewport({
