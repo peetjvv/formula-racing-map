@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Sniglet&display=swap');
 @import './vars.json';
-@import './setup.scss';
+@import '~@peetjvv/styles/scss/vars.json';
+@import '~@peetjvv/styles/scss/main.scss';
+
+@import 'mapbox-gl/dist/mapbox-gl.css';
 
 @import './app.scss';
+
 @import './date-range-slider.scss';
 @import './map-controls-toolbar.scss';
 @import './map-style-toolbar.scss';
 @import './mapbox-geocoder.scss';
-
-@import 'mapbox-gl/dist/mapbox-gl.css';

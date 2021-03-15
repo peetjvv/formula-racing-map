@@ -5,7 +5,7 @@
   border-radius: $global-radius;
   border: 1px solid $pt-black;
 
-  background-color: $pt-white;
+  background-color: $body-background;
 
   .map-control-button {
     position: relative;
@@ -55,6 +55,19 @@
       user-select: none;
       -moz-user-select: none;
       -webkit-user-select: none;
+    }
+  }
+}
+
+// dark mode overrides
+@if $allow-dark-mode {
+  @media (prefers-color-scheme: dark) {
+    .map-controls-toolbar {
+      border-color: $pt-white;
+
+      .map-control-button:not(:last-child) {
+        border-color: $pt-white;
+      }
     }
   }
 }

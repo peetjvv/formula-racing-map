@@ -54,7 +54,7 @@ const Map: React.FC<{
     const initialViewport: MyViewportProps = {
       ...viewport,
       width: window.innerWidth,
-      height: window.innerHeight - vars['top-panel-height'],
+      height: window.innerHeight - parseInt(vars['top-panel-height']),
     };
     setViewport(initialViewport);
 
@@ -62,7 +62,7 @@ const Map: React.FC<{
       setViewport({
         ...viewport,
         width: window.innerWidth,
-        height: window.innerHeight - 200,
+        height: window.innerHeight - parseInt(vars['top-panel-height']),
       });
     });
   }, []);

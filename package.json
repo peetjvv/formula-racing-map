@@ -23,6 +23,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@peetjvv/styles": "^0.0.6",
     "axios": "^0.21.1",
     "luxon": "^1.26.0",
     "react": "^17.0.1",

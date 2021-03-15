@@ -7,11 +7,11 @@
 
     .top-panel {
       z-index: 1;
-      height: $top-panel-height + 0px;
+      height: $top-panel-height;
       padding: 1rem 1.5rem;
       background-color: $pt-white;
 
-      box-shadow: 0px 0px 19px -6px $pt-black;
+      box-shadow: 0px 0px 19px -6px $pt-black; // TODO: $box-shadow-2
     }
 
     .map-container {
@@ -36,7 +36,7 @@
 
         .mapboxgl-ctrl-scale {
           border-color: $pt-black;
-          color: $pt-black;
+          color: $font-color;
         }
       }
 
@@ -45,7 +45,7 @@
         $placement-offset: 1rem;
 
         > * {
-          box-shadow: 0px 0px 12px -6px $pt-black;
+          box-shadow: 0px 0px 12px -6px $pt-black; // TODO: $box-shadow-1
         }
 
         &.top {
@@ -67,6 +67,21 @@
         &.center {
           left: 50vw; // fallback
         }
+      }
+    }
+  }
+}
+
+// dark mode overrides
+@if $allow-dark-mode {
+  @media (prefers-color-scheme: dark) {
+    #app .content {
+      .top-panel {
+        background-color: $pt-black;
+      }
+
+      .map-container .scale-controls-container .mapboxgl-ctrl-scale {
+        border-color: $pt-white;
       }
     }
   }
