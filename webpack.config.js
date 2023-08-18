@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const jsonImporter = require('node-sass-json-importer');
 const webpack = require('webpack');
+const { EnvironmentPlugin } = require('webpack');
 
 const isDevServer = process.argv.some(v => v === 'serve');
 
@@ -38,23 +38,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              sassOptions: {
-                importer: jsonImporter({
-                  resolver: function (dir, url) {
-                    if (url.startsWith('~') && url.endsWith('.json')) {
-                      return path.resolve(
-                        __dirname,
-                        'node_modules',
-                        url.substr(1)
-                      );
-                    } else if (url.endsWith('.json')) {
-                      return path.resolve(dir, url);
-                    }
-
-                    return url;
-                  },
-                }),
-              },
+              implementation: require('sass'),
             },
           },
         ],
@@ -79,9 +63,8 @@ module.exports = {
       filename: 'index.html',
       favicon: './src/favicon.ico',
     }),
-    new webpack.EnvironmentPlugin({
-      MAPBOX_TOKEN:
-        'pk.eyJ1IjoicGVldGp2diIsImEiOiJja2lza3E5cmkyMzAyMnFwM2VpeWUwYjV2In0.kze_sfKhhkSqVM5DfQtlMw',
+    new EnvironmentPlugin({
+      MAPBOX_TOKEN: JSON.stringify(process.env.MAPBOX_TOKEN),
     }),
   ],
   devServer: {

@@ -1,0 +1,25 @@
+$breakpoint-tablet: 1023px;
+$breakpoint-mobile: 767px;
+
+$top-panel-height: 20px;
+
+$global-radius: 0.5rem;
+
+$pt-white: #fefefe;
+$pt-light-grey: #eeeeee;
+$pt-black: #141414;
+$pt-blue: #1a79bc;
+
+:export {
+  breakpoint-tablet: $breakpoint-tablet;
+  breakpoint-mobile: $breakpoint-mobile;
+
+  top-panel-height: $top-panel-height;
+
+  global-radius: $global-radius;
+
+  pt-white: $pt-white;
+  pt-light-grey: $pt-light-grey;
+  pt-black: $pt-black;
+  pt-blue: $pt-blue;
+}

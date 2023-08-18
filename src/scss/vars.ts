@@ -1,3 +1,3 @@
-import * as vars from './vars.json';
+import * as vars from './variables.scss';
 
 export default { ...vars };

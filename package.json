@@ -4,7 +4,7 @@
   "description": "React app of a map displaying the Formula 1, 2, 3 and E races schedule",
   "main": "index.tsx",
   "scripts": {
-    "start": "webpack serve --mode=development",
+    "start": "dotenv -e .env -e .env.dev -- webpack serve --mode=development",
     "clean": "rimraf build",
     "build": "npm run clean && webpack --mode=production"
   },
@@ -28,7 +28,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-input-autosize": "^3.0.0",
-    "react-map-gl": "^6.1.10"
+    "react-map-gl": "^6.1.10",
+    "sass": "^1.66.0"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.7",
@@ -38,12 +39,12 @@
     "@types/react-input-autosize": "^2.2.0",
     "@types/react-map-gl": "^5.2.9",
     "css-loader": "^5.1.2",
+    "dotenv-cli": "^7.3.0",
     "file-loader": "^6.2.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "json-loader": "^0.5.7",
     "modernizr-loader": "^1.0.1",
-    "node-sass-json-importer": "^4.3.0",
     "rimraf": "^3.0.2",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
